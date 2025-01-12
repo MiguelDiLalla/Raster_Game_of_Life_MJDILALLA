@@ -33,6 +33,19 @@ def invert_colors(alive_color, dead_color):
     """
     return dead_color, alive_color
 
+def hex_to_rgb(hex_color):
+    """
+    Convierte un color hexadecimal a un formato RGB.
+
+    Args:
+        hex_color (str): Color en formato hexadecimal (e.g., "#FFFFFF").
+
+    Returns:
+        tuple: Color en formato RGB (R, G, B).
+    """
+    hex_color = hex_color.lstrip('#')
+    return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+
 def capture_frame(surface):
     """
     Captura el contenido de la ventana de pygame como una imagen de PIL.
@@ -50,13 +63,15 @@ def capture_frame(surface):
 def visualize_game(
     game_of_life,
     cell_size=None,
-    alive_color=None,
-    dead_color=None,
+    save_as_gif=False,
+    gif_path="game_of_life.gif",
+    disable_display=False,
+    color_alive="#000000",
+    color_dead="#FFFFFF",
+    randomize_colors=False,
     grid_color=(50, 50, 50),
     fps=None,
     show_stats=False,
-    save_as_gif=False,
-    gif_path="game_of_life.gif",
     verbose=False
 ):
     """
@@ -65,30 +80,39 @@ def visualize_game(
     Args:
         game_of_life (GameOfLife): Instancia del juego.
         cell_size (int, optional): Tamaño de cada celda en píxeles. Aleatorio si None.
-        alive_color (tuple, optional): Color de las celdas vivas (RGB). Aleatorio si None.
-        dead_color (tuple, optional): Color de las celdas muertas (RGB). Aleatorio si None.
+        save_as_gif (bool): Si True, guarda la simulación como un archivo GIF.
+        gif_path (str): Ruta para guardar el GIF.
+        disable_display (bool): Si True, evita que Pygame abra una ventana.
+        color_alive (str): Color hexadecimal para células vivas.
+        color_dead (str): Color hexadecimal para células muertas.
+        randomize_colors (bool): Si True, genera colores aleatorios para células vivas y muertas.
         grid_color (tuple): Color de las líneas de la cuadrícula (RGB).
         fps (int, optional): Cuadros por segundo para la animación. Aleatorio si None.
         show_stats (bool): Si True, muestra estadísticas minimalistas.
-        save_as_gif (bool): Si True, guarda la simulación como un archivo GIF.
-        gif_path (str): Ruta para guardar el GIF.
         verbose (bool): Si True, imprime detalles de los parámetros utilizados.
     """
     pygame.init()
 
     # Asignar valores por defecto o aleatorios
     cell_size = cell_size or random.choice(range(5, 21))
-    alive_color, dead_color = alive_color or generate_color_pair()
     fps = fps or random.choice(range(5, 31))
+
+    if randomize_colors:
+        alive_color, dead_color = generate_color_pair()
+    else:
+        alive_color = hex_to_rgb(color_alive)
+        dead_color = hex_to_rgb(color_dead)
 
     parameters = {
         "Cell Size": cell_size,
         "Alive Color": alive_color,
         "Dead Color": dead_color,
+        "Randomize Colors": randomize_colors,
         "Grid Color": grid_color,
         "FPS": fps,
         "Save as GIF": save_as_gif,
         "GIF Path": gif_path,
+        "Disable Display": disable_display
     }
 
     if verbose:
@@ -96,10 +120,13 @@ def visualize_game(
         for key, value in parameters.items():
             print(f"{key}: {value}")
 
-    # Dimensiones de la ventana
+    # Crear la superficie de renderizado
     width, height = game_of_life.cols * cell_size, game_of_life.rows * cell_size
-    screen = pygame.display.set_mode((width, height))
-    pygame.display.set_caption("Game of Life")
+    if disable_display:
+        screen = pygame.Surface((width, height))  # Superficie sin ventana
+    else:
+        screen = pygame.display.set_mode((width, height))
+        pygame.display.set_caption("Game of Life")
 
     # Fuente para estadísticas (si están habilitadas)
     font = pygame.font.SysFont("consolas", 20)
@@ -117,17 +144,18 @@ def visualize_game(
     frames = []  # Almacenar cuadros para crear el GIF
 
     while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:  # Pausar/Reanudar
-                    paused = not paused
-                elif event.key == pygame.K_r:  # Reiniciar
-                    game_of_life.board = np.random.randint(2, size=(game_of_life.rows, game_of_life.cols))
-                    generation = 0
-                    previous_boards = []
-                    loop_counter = 0
+        if not disable_display:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:  # Pausar/Reanudar
+                        paused = not paused
+                    elif event.key == pygame.K_r:  # Reiniciar
+                        game_of_life.board = np.random.randint(2, size=(game_of_life.rows, game_of_life.cols))
+                        generation = 0
+                        previous_boards = []
+                        loop_counter = 0
 
         if not paused:
             # Avanzar un paso en la simulación
@@ -173,14 +201,15 @@ def visualize_game(
             frames.append(capture_frame(screen))
 
         # Mostrar estadísticas si está habilitado
-        if show_stats:
+        if show_stats and not disable_display:
             alive_cells = np.sum(game_of_life.board)
             stats_text = f"Gen: {generation} | Alive: {alive_cells}"
             stats_surface = font.render(stats_text, True, (255, 255, 255))
             screen.blit(stats_surface, (10, 10))
 
-        pygame.display.flip()
-        clock.tick(fps)
+        if not disable_display:
+            pygame.display.flip()
+            clock.tick(fps)
 
     pygame.quit()
 

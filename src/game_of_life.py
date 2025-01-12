@@ -2,7 +2,6 @@ import numpy as np
 from datetime import datetime
 import platform
 import cpuinfo
-from visualization import visualize_game
 
 class Execution:
     def __init__(self, dimensions, steps, initial_state, seed=None):
@@ -26,9 +25,6 @@ class Execution:
         self.min_alive_cells = np.prod(dimensions)
         self.execution_time = 0
         self.processor_info = cpuinfo.get_cpu_info()
-        self.loop_detected = False
-        self.loop_length = 0
-        self.operations_count = 0
 
     def update_stats(self, board):
         """
@@ -43,55 +39,17 @@ class Execution:
         self.alive_cells_stats.append(alive_percentage)
         self.max_alive_cells = max(self.max_alive_cells, alive_cells)
         self.min_alive_cells = min(self.min_alive_cells, alive_cells)
-        self.operations_count += 1
 
-    def finalize(self, step_count, execution_time, loop_detected=False, loop_length=0):
+    def finalize(self, step_count, execution_time):
         """
         Finalizes the execution by recording final statistics.
 
         Args:
             step_count (int): Total number of steps executed.
             execution_time (float): Total execution time in seconds.
-            loop_detected (bool): Whether a loop was detected.
-            loop_length (int): Length of the detected loop.
         """
         self.step_count = step_count
         self.execution_time = execution_time
-        self.loop_detected = loop_detected
-        self.loop_length = loop_length
-
-    def get_loop_info(self):
-        """
-        Returns loop detection status and its length.
-
-        Returns:
-            tuple: (loop_detected, loop_length)
-        """
-        return self.loop_detected, self.loop_length
-
-    def summary(self):
-        """
-        Generates a user-friendly summary of the execution statistics.
-
-        Returns:
-            str: A formatted string summarizing the execution.
-        """
-        return f"""
-        Game of Life Execution Summary
-        --------------------------------
-        Dimensions: {self.dimensions[0]} x {self.dimensions[1]}
-        Steps Executed: {self.step_count}/{self.steps}
-        Execution Time: {self.execution_time:.2f} seconds
-        Max Alive Cells: {self.max_alive_cells}
-        Min Alive Cells: {self.min_alive_cells}
-        Operations Count: {self.operations_count}
-        Loop Detected: {'Yes' if self.loop_detected else 'No'}
-        Loop Length: {self.loop_length if self.loop_detected else 'N/A'}
-        Timestamp: {self.timestamp.strftime('%Y-%m-%d %H:%M:%S')}
-        Seed: {self.seed if self.seed is not None else 'Randomly Generated'}
-        Processor: {self.processor_info.get('brand_raw', 'Unknown Processor')}
-        System: {platform.system()} {platform.architecture()[0]}
-        """
 
     def to_dict(self):
         """
@@ -113,14 +71,12 @@ class Execution:
             "processor": self.processor_info.get('brand_raw', 'Unknown Processor'),
             "architecture": platform.architecture()[0],
             "system": platform.system(),
-            "processor_name": platform.processor(),
-            "loop_detected": self.loop_detected,
-            "loop_length": self.loop_length,
-            "operations_count": self.operations_count
+            "processor_name": platform.processor()
         }
 
+
 class GameOfLife:
-    def __init__(self, dimensions=(10, 10), steps=0, initial_state=None, seed=None):
+    def __init__(self, dimensions=(10, 10), steps=0, initial_state=None, seed=None, verbose=False):
         """
         Class implementing Conway's Game of Life simulation.
 
@@ -129,19 +85,28 @@ class GameOfLife:
             steps (int): Number of steps to run the simulation.
             initial_state (numpy.ndarray, optional): Custom initial board state.
             seed (int, optional): Seed for reproducibility.
+            verbose (bool): If True, prints detailed information during simulation.
         """
         self.rows, self.cols = dimensions
         self.steps = steps
         np.random.seed(seed)
-        self.seed = seed
+        self.seed = seed if seed is not None else np.random.randint(0, 1000000)
+        self.verbose = verbose
         self.board = (
             initial_state
             if initial_state is not None
             else np.random.randint(2, size=(self.rows, self.cols))
         )
         self.execution = Execution(
-            dimensions=dimensions, steps=steps, initial_state=self.board.copy(), seed=seed
+            dimensions=dimensions, steps=steps, initial_state=self.board.copy(), seed=self.seed
         )
+
+        if self.verbose:
+            print("--- Game of Life Initialization ---")
+            print(f"Dimensions: {dimensions}")
+            print(f"Steps: {steps} (default)" if steps == 0 else f"Steps: {steps} (user-defined)")
+            print(f"Seed: {self.seed} (random)" if seed is None else f"Seed: {self.seed} (user-defined)")
+            print(f"Initial State: {'default-random' if initial_state is None else 'user-defined'}")
 
     def count_neighbors(self, board):
         """
@@ -175,31 +140,29 @@ class GameOfLife:
         ).astype(int)
         self.execution.update_stats(self.board)
 
+        if self.verbose:
+            print(f"Step {self.execution.step_count + 1}: Alive Cells = {np.sum(self.board)}")
+
     def run(self):
         """
         Runs the simulation for the specified number of steps.
         """
         import time
         start_time = time.time()
-        previous_boards = []
-        loop_detected = False
-        loop_length = 0
+
+        if self.verbose:
+            print("--- Simulation Started ---")
 
         for step in range(self.steps):
             self.step()
 
-            # Check for loops
-            board_tuple = tuple(map(tuple, self.board))
-            if board_tuple in previous_boards:
-                loop_detected = True
-                loop_length = len(previous_boards) - previous_boards.index(board_tuple)
-                break
-            previous_boards.append(board_tuple)
-            if len(previous_boards) > 100:  # Limit history size
-                previous_boards.pop(0)
-
         end_time = time.time()
-        self.execution.finalize(step + 1, end_time - start_time, loop_detected, loop_length)
+        self.execution.finalize(step + 1, end_time - start_time)
+
+        if self.verbose:
+            print("--- Simulation Ended ---")
+            print(f"Total Steps Executed: {self.execution.step_count}")
+            print(f"Execution Time: {self.execution.execution_time:.2f} seconds")
 
     def get_execution_stats(self):
         """
@@ -208,18 +171,10 @@ class GameOfLife:
         Returns:
             str: Formatted summary of the execution statistics.
         """
-        return self.execution.summary()
+        return self.execution.to_dict()
 
-# Centralized interface for running and visualizing the game
-def run_and_visualize(dimensions, steps, seed=None):
-    """
-    Centralized method to run and visualize a Game of Life simulation.
-
-    Args:
-        dimensions (tuple): Dimensions of the board (rows, columns).
-        steps (int): Number of steps to run the simulation.
-        seed (int, optional): Seed for reproducibility.
-    """
-    game = GameOfLife(dimensions=dimensions, steps=steps, seed=seed)
+# Example usage:
+if __name__ == "__main__":
+    game = GameOfLife(dimensions=(10, 10), steps=5, verbose=True)
     game.run()
-    visualize_game(game)
+    print(game.get_execution_stats())
