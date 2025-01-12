@@ -1,7 +1,18 @@
 # __init__.py
 
-import game_of_life
-# import visualization
-import test_game_of_life
+# Importa las clases principales
+from .game_of_life import GameOfLife, Execution
 
-__all__ = ["GameOfLife", "Execution"]#, "apply_dithering", "process_image"]
+# Importa herramientas adicionales (si existen)
+from .dithering import apply_dithering
+from .image_processing import process_image
+from .visualization import visualize_game
+
+# Define las exportaciones públicas del módulo
+__all__ = [
+    "GameOfLife",
+    "Execution",
+    "apply_dithering",
+    "process_image",
+    "visualize_game"
+]

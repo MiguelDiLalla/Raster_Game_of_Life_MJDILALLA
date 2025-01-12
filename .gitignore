@@ -1,0 +1,51 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Conda and virtual environments
+*.conda
+*.virtualenv
+*.env
+venv/
+ENV/
+env/
+
+# Notebook checkpoints and temporary files
+.ipynb_checkpoints/
+*.ipynb~
+
+# VS Code configuration files
+.vscode/
+*.code-workspace
+
+# pytest cache and testing artifacts
+.pytest_cache/
+*.pytest_cache/
+test-results/
+
+# Generated files and results
+*.gif
+*.json
+*.csv
+*.log
+*.tmp
+*.out
+results/
+notebooks/results/
+
+# Environment and dependency management
+environment.yml
+requirements.txt
+
+# Git and metadata
+.DS_Store
+.git/
+.gitignore
+Tree.txt
+estructura.txt
+CACHEDIR.TAG
+
+# Custom exclusions
+data/
+src/TESTING_NOTEBOOK.ipynb
