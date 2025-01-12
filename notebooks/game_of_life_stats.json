@@ -1,0 +1,9 @@
+{
+    "dimensions": [
+        20,
+        20
+    ],
+    "steps": 500,
+    "step_count": 261,
+    "execution_time": 0.05485200881958008,
+    "max_alive_cells": 
