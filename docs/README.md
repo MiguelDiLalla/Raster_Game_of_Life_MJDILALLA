@@ -1,130 +1,112 @@
 # Project Documentation: Game of Life
 
 ## Overview
-This project provides a modular and optimized implementation of Conway's "Game of Life," enabling efficient simulation, detailed analysis, and visualization. The design emphasizes flexibility, scalability, and reproducibility, making it suitable for educational, research, and aesthetic purposes.
+This project is a comprehensive implementation of Conway's "Game of Life," emphasizing modularity, scalability, and interactivity. It leverages Python libraries such as NumPy, Pygame, and Streamlit to provide a dynamic and educational platform for exploring cellular automata. The project includes enhanced visualization features, statistical tracking, and an interactive web interface.
 
-## Features and Modules
+## Key Features
 
 ### Core Engine (`game_of_life.py`)
-The core of the project includes:
-- **GameOfLife Class:** Implements Conway's rules and simulates state transitions efficiently.
-- **Execution Class:** Tracks metadata, statistics, and execution details such as:
-  - Percentage of alive cells over time.
-  - Loop detection to identify repeating states.
-  - Execution time, seed, and environment details.
+- **Efficient Simulation**: Uses convolution with SciPy to compute neighbors, optimizing performance for large grids.
+- **Execution Metadata**: Tracks key metrics such as alive cells, loop detection, and execution time.
+- **Verbose Mode**: Provides real-time feedback during the simulation.
 
-#### Example Usage
+#### Example Usage:
 ```python
 from game_of_life import GameOfLife
 
-# Initialize and run the simulation
-game = GameOfLife(dimensions=(30, 30), steps=50, seed=1234)
+game = GameOfLife(dimensions=(50, 50), steps=100, verbose=True)
 game.run()
-
-# Retrieve execution statistics
 print(game.get_execution_stats())
 ```
 
 ### Visualization Module (`visualization.py`)
-Facilitates dynamic visualization of the simulation using **Pygame**, with features including:
-- **Color Pair Selection:** Generates random or predefined color schemes for alive and dead cells.
-- **Interactive Controls:** Pause, reset, or adjust the simulation in real time.
-- **GIF Export:** Optionally saves the simulation as an animated GIF.
+- **Color Customization**: Supports custom or random color palettes for alive and dead cells.
+- **GIF Export**: Captures and saves simulations as animated GIFs.
+- **Grid Control**: Adjustable cell sizes and grid colors for better visuals.
 
-#### Example Usage
+#### Example Usage:
 ```python
-from game_of_life import GameOfLife
 from visualization import visualize_game
 
-# Run and visualize the simulation
-game = GameOfLife(dimensions=(20, 20), steps=100)
-visualize_game(game, save_as_gif=True, gif_path="output.gif")
+visualize_game(
+    game_of_life=game,
+    save_as_gif=True,
+    gif_path="simulation.gif",
+    color_alive="#00FF00",
+    color_dead="#000000",
+    fps=15
+)
 ```
 
-### Testing Module (`test_game_of_life.py`)
-Provides tools to verify the behavior and correctness of the simulation:
-- Generates random or preset initial states (e.g., "glider," "block").
-- Configures simulation parameters dynamically.
-- Includes visualization during testing for interactive debugging.
+### Streamlit Interface (`app.py`)
+- **Interactive Simulation**: Configure grid dimensions, steps, and colors directly in the web interface.
+- **Real-Time Feedback**: View progress, statistics, and rendered GIFs in a user-friendly layout.
+- **Session Management**: Tracks the last simulation metadata and GIF for easy download.
 
-#### Example Test
+#### Example Interface Workflow:
+1. Set grid dimensions, number of steps, and cell colors.
+2. Click **Render Simulation** to generate and display a GIF.
+3. Download the generated GIF or explore the metadata.
+
+### Testing Module (`test_game_of_life.py`)
+- **Preset Patterns**: Includes classic configurations like "block," "blinker," and "glider."
+- **Randomized Tests**: Generates random boards for exploratory simulations.
+- **Visualization Integration**: Optional live visualization during test runs.
+
+#### Example Test:
 ```python
 from test_game_of_life import test_simulation
 
-# Run a test with a preset pattern
-report = test_simulation(preset="glider", steps=50, visualize=True)
-
-# Print the simulation summary
-for key, value in report.items():
-    print(f"{key}: {value}")
+test_result = test_simulation(rows=20, cols=20, steps=50, preset="glider", visualize=True)
+print(test_result)
 ```
-
-### Initialization (`__init__.py`)
-Centralizes imports for the module, exposing key components like `GameOfLife`, `Execution`, and utility functions.
-
-### Planned Features
-1. **Advanced Visualization:**
-   - Streamlit-based web interface for remote simulation.
-   - Enhanced customization of visual aesthetics.
-2. **Rule Extensions:**
-   - Support for non-standard cellular automata rules.
-3. **Performance Enhancements:**
-   - GPU acceleration for large-scale simulations.
-   - Multi-threaded execution for better performance.
 
 ## Getting Started
 
 ### Installation
-Clone the repository and install required dependencies:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/game-of-life
+   cd game-of-life
+   ```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### Running the Streamlit App
+Launch the interactive interface:
 ```bash
-git clone https://github.com/your-repo/game-of-life
-cd game-of-life
-pip install -r requirements.txt
+streamlit run app.py
 ```
 
-### Running the Simulation
+### Running a Standalone Simulation
 ```python
 from game_of_life import GameOfLife
 
-# Define dimensions and steps
-game = GameOfLife(dimensions=(50, 50), steps=200)
-game.run()
-```
-
-### Custom Initial State
-```python
-import numpy as np
-from game_of_life import GameOfLife
-
-initial_state = np.array([
-    [0, 1, 0],
-    [1, 1, 1],
-    [0, 1, 0]
-])
-game = GameOfLife(dimensions=(3, 3), steps=10, initial_state=initial_state)
+game = GameOfLife(dimensions=(30, 30), steps=50)
 game.run()
 ```
 
 ## Roadmap
 
-1. **Core Engine Refinement**
-   - Extend boundary conditions.
-   - Optimize neighbor computation for larger grids.
+1. **Core Engine Improvements**
+   - Implement additional boundary conditions.
+   - Add custom rule configurations.
 2. **Visualization Enhancements**
-   - Real-time visual feedback during parameter tuning.
-   - Animated export improvements.
-3. **Interactivity Features**
-   - Add user-driven pattern creation tools.
-4. **Testing and Validation**
-   - Automated test suite integration for CI/CD pipelines.
+   - Support for 3D cellular automata visualizations.
+   - Interactive real-time editing of grid states.
+3. **Performance Optimization**
+   - Introduce GPU acceleration for larger simulations.
+   - Explore multi-threading for faster computations.
 
 ## Contributing
-Contributions are welcome to enhance this project! Follow the [contribution guidelines](CONTRIBUTING.md) in the repository.
+We welcome contributions to improve this project! Please adhere to the [contribution guidelines](CONTRIBUTING.md).
 
 ## License
 This project is licensed under the GNU General Public License, Version 3 (GPLv3).
 
 ---
 
-This documentation will evolve as features are added and the project grows. Stay tuned for updates!
+This documentation reflects the current state of the project and will evolve as new features are added. Stay tuned for updates!
 
