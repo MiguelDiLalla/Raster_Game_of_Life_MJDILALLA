@@ -72,7 +72,8 @@ def visualize_game(
     grid_color=(50, 50, 50),
     fps=None,
     show_stats=False,
-    verbose=False
+    verbose=False,
+    capture_interval=1
 ):
     """
     Visualiza la simulación del Game of Life usando pygame, con captura de cuadros y exportación a GIF.
@@ -90,6 +91,7 @@ def visualize_game(
         fps (int, optional): Cuadros por segundo para la animación. Aleatorio si None.
         show_stats (bool): Si True, muestra estadísticas minimalistas.
         verbose (bool): Si True, imprime detalles de los parámetros utilizados.
+        capture_interval (int): Intervalo de pasos para capturar cuadros en el GIF.
     """
     pygame.init()
 
@@ -112,7 +114,8 @@ def visualize_game(
         "FPS": fps,
         "Save as GIF": save_as_gif,
         "GIF Path": gif_path,
-        "Disable Display": disable_display
+        "Disable Display": disable_display,
+        "Capture Interval": capture_interval
     }
 
     if verbose:
@@ -197,7 +200,7 @@ def visualize_game(
                 )
 
         # Capturar cuadro si se va a guardar como GIF
-        if save_as_gif:
+        if save_as_gif and (generation % capture_interval == 0):
             frames.append(capture_frame(screen))
 
         # Mostrar estadísticas si está habilitado

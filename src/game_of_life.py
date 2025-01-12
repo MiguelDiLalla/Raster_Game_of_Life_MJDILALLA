@@ -1,5 +1,6 @@
 import numpy as np
 from datetime import datetime
+from scipy.signal import convolve2d
 import platform
 import cpuinfo
 
@@ -110,7 +111,7 @@ class GameOfLife:
 
     def count_neighbors(self, board):
         """
-        Counts the number of alive neighbors for each cell.
+        Counts the number of alive neighbors for each cell using convolution.
 
         Args:
             board (numpy.ndarray): Current state of the board.
@@ -118,17 +119,10 @@ class GameOfLife:
         Returns:
             numpy.ndarray: Array with neighbor counts for each cell.
         """
-        neighbors = (
-            np.roll(np.roll(board, 1, axis=0), 1, axis=1) +
-            np.roll(np.roll(board, 1, axis=0), -1, axis=1) +
-            np.roll(np.roll(board, -1, axis=0), 1, axis=1) +
-            np.roll(np.roll(board, -1, axis=0), -1, axis=1) +
-            np.roll(board, 1, axis=0) +
-            np.roll(board, -1, axis=0) +
-            np.roll(board, 1, axis=1) +
-            np.roll(board, -1, axis=1)
-        )
-        return neighbors
+        kernel = np.array([[1, 1, 1],
+                           [1, 0, 1],
+                           [1, 1, 1]])
+        return convolve2d(board, kernel, mode='same', boundary='wrap')
 
     def step(self):
         """
@@ -145,7 +139,7 @@ class GameOfLife:
 
     def run(self):
         """
-        Runs the simulation for the specified number of steps.
+        Runs the simulation for the specified number of steps, stopping if convergence is detected.
         """
         import time
         start_time = time.time()
@@ -153,8 +147,18 @@ class GameOfLife:
         if self.verbose:
             print("--- Simulation Started ---")
 
+        previous_board = None
+
         for step in range(self.steps):
+            previous_board = self.board.copy() if previous_board is None else previous_board
             self.step()
+
+            if np.array_equal(self.board, previous_board):
+                if self.verbose:
+                    print(f"Convergence detected at step {step + 1}.")
+                break
+
+            previous_board = self.board.copy()
 
         end_time = time.time()
         self.execution.finalize(step + 1, end_time - start_time)

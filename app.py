@@ -40,48 +40,74 @@ def game_of_life_block():
     # Menú desplegable para tamaño de archivo límite
     file_size_limit = st.selectbox("Tamaño límite del archivo (MB)", options=[1, 5, 10, 20, 50], index=2)
 
+    # Ajustar tamaño de celda dinámicamente para optimizar memoria
+    max_dimension = max(rows, cols)
+    cell_size = max(1, 10 // max(1, max_dimension // 100))
+
+    # Barra de progreso personalizada
+    progress_bar_container = st.empty()
+
     # Botón para renderizar
     if st.button("Renderizar Simulación"):
-        # Crear simulación inicial
-        default_game = GameOfLife(dimensions=(rows, cols), steps=steps, verbose=True)
-        default_game.run()
-        gif_path = "default_game_of_life.gif"
-        metadata = {
-            'rows': rows,
-            'cols': cols,
-            'steps': steps,
-            'color_alive': color_alive,
-            'color_dead': color_dead,
-            'randomize_colors': randomize_colors,
-            'file_size_limit': file_size_limit,
-            'generations': default_game.execution.step_count,
-            'max_alive_cells': default_game.execution.max_alive_cells,
-            'min_alive_cells': default_game.execution.min_alive_cells,
-            'execution_time': default_game.execution.execution_time
-        }
-        visualize_game(
-            game_of_life=default_game,
-            cell_size=10,  # Valor fijo de ejemplo para el tamaño de celda
-            save_as_gif=True,
-            gif_path=gif_path,
-            disable_display=True,
-            color_alive=color_alive,
-            color_dead=color_dead,
-            randomize_colors=randomize_colors
-        )
+        try:
+            # Crear simulación inicial
+            default_game = GameOfLife(dimensions=(rows, cols), steps=steps, verbose=True)
+            default_game.run()
 
-        # Almacenar resultados en session_state
-        st.session_state['last_simulation'] = {
-            'gif_path': gif_path,
-            'metadata': metadata
-        }
+            # Limitación de captura de cuadros
+            capture_interval = max(1, steps // 50)  # Capturar 50 cuadros como máximo
 
-        with visualization_container:
-            st.image(
-                gif_path,
-                caption="Simulación Generada (GIF)",
-                use_container_width=True
+            gif_path = "default_game_of_life.gif"
+            metadata = {
+                'rows': rows,
+                'cols': cols,
+                'steps': steps,
+                'color_alive': color_alive,
+                'color_dead': color_dead,
+                'randomize_colors': randomize_colors,
+                'file_size_limit': file_size_limit,
+                'generations': default_game.execution.step_count,
+                'max_alive_cells': default_game.execution.max_alive_cells,
+                'min_alive_cells': default_game.execution.min_alive_cells,
+                'execution_time': default_game.execution.execution_time
+            }
+
+            for step in range(steps):
+                # Simulación paso a paso y barra de progreso visual personalizada
+                default_game.step()
+                color = color_alive if step % 2 == 0 else color_dead
+                progress_bar_container.markdown(
+                    f"<div style='width: 100%; height: 5px; background: linear-gradient(to right, {color} {step * 100 / steps}%, #e0e0e0 {step * 100 / steps}%);'></div>",
+                    unsafe_allow_html=True
+                )
+
+            visualize_game(
+                game_of_life=default_game,
+                cell_size=cell_size,
+                save_as_gif=True,
+                gif_path=gif_path,
+                disable_display=True,
+                color_alive=color_alive,
+                color_dead=color_dead,
+                randomize_colors=randomize_colors,
+                capture_interval=capture_interval
             )
+
+            # Almacenar resultados en session_state
+            st.session_state['last_simulation'] = {
+                'gif_path': gif_path,
+                'metadata': metadata
+            }
+
+            with visualization_container:
+                st.image(
+                    gif_path,
+                    caption="Simulación Generada (GIF)",
+                    use_container_width=True
+                )
+
+        except MemoryError:
+            st.error("Se alcanzó el límite de memoria. Reduce el tamaño del tablero o el número de pasos e inténtalo nuevamente.")
 
     # Botón para guardar el GIF
     if st.session_state['last_simulation']['gif_path']:
