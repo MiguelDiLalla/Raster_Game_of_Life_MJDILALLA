@@ -1,6 +1,23 @@
 [theme]
-base="dark"
-primaryColor="#5022dc"
-secondaryBackgroundColor="#0f071a"
-textColor="#efc724"
-font="monospace"
+base = "dark"
+primaryColor = "#FF5733"
+backgroundColor = "#121212"
+secondaryBackgroundColor = "#232323"
+textColor = "#EAEAEA"
+font = "monospace"
+
+[server]
+headless = true
+enableCORS = false
+port = 8501
+allowedOrigins = ["http://localhost", "https://tu-dominio.com"]
+
+[cache]
+enable = true
+ttl = 3600
+
+[script]
+autoRerun = true
+
+[logger]
+level = "debug"
