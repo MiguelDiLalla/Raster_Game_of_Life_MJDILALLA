@@ -1,6 +1,7 @@
+--upgrade pip
 streamlit
 numpy
 pygame
-scipy==1.10.1
+scipy==1.13.1
 Pillow
-cpuinfo
+py-cpuinfo
