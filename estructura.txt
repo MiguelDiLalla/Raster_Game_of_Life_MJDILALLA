@@ -122,6 +122,8 @@ Side_quest_gameoflife/
                 c4c377b0f7a800b100d6c1a825c9be25b52f67
             3b/
                 e31cd67747a6aa4bb2b7d18e3cce6225917094
+            3e/
+                1cca1fb09d13abcbe6cecacf34ca633eeeabe7
             40/
                 1e1407f3a333264268ea6a57aa6f114d01a21a
             42/
@@ -229,12 +231,15 @@ Side_quest_gameoflife/
                 05106e6c260c58af4eccdaabd3be02dce7ded3
             a8/
                 d43c7a1f4f15942afaf1d4da2803cfc231e9f1
+            ad/
+                49ef4fe3871949b016021eefd775fac4121c80
             af/
                 7446d703e11f539a8d42bcda215fd708eb4610
             b0/
                 06a7ded567e233ffbb0ba4c7e6c3005db42af1
             b3/
                 47dcfdc1eea8c3b24b0f83ad3cf3657411440a
+                9ac347992f0c7dbc6632ea12434d5b0381a036
             b4/
                 c66c1640c01a8bcee8bf71411e7276a2cb5237
             b6/
@@ -256,6 +261,7 @@ Side_quest_gameoflife/
                 593b8d06d5fb166bccdbdfa80fee57fae5cdb0
             cd/
                 0e001bff0779ed5cc6abb3d6d016f43ee51180
+                8daa3f786a0185c4b9358d52eecef8852c36e0
             ce/
                 dcc5e85419a4ed87e78b260f2820bf161c987a
                 f4c0dbb56828827aa66237a6aa48f312dfb08a
@@ -345,8 +351,15 @@ Side_quest_gameoflife/
         algorithms.md
         README.md
     Executable_exp/
+        blur_output.jpg
         Experimente_filt_func_notebook.ipynb
         Filtering_function.py
+        grayscale_output.jpg
+        invert_output.jpg
+        main_executable.py
+        __init__.py
+        __pycache__/
+            Filtering_function.cpython-312.pyc
     notebooks/
         analysis.ipynb
         development.ipynb
