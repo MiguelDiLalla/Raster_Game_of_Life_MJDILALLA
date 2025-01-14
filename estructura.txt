@@ -1,7 +1,6 @@
 Side_quest_gameoflife/
     .gitignore
     app.py
-    config.toml
     environment.yml
     estructura.txt
     game_of_life.gif
@@ -51,6 +50,7 @@ Side_quest_gameoflife/
                         Streamlit_first
         objects/
             00/
+                19776f832e1a352ded62b8cb4ec1be003f9c9b
                 d8d4b0f2b9ebc5cecfb750b0edcdc7c96e9ca1
             03/
                 7b9808f1c87002855570ba84ab057a4686ca71
@@ -66,6 +66,7 @@ Side_quest_gameoflife/
             0e/
                 a06fac32dd2cf8ed6e3debcedc0892812f7afb
             0f/
+                7bf9545c5e4cbc3762c7b50685e97344589d8d
                 ff1aeb6553965516cc00f38ed13d08cab16fdc
             15/
                 201acc113da01edf6fa2fb2708b2e9076b6bc5
@@ -96,6 +97,7 @@ Side_quest_gameoflife/
             29/
                 99c7692f72f6ed1740b2cddbfdc0dade00d454
             2a/
+                e5bdf4a83cde54b7234427bc151a97bc2be7c0
                 f81e58d42fc11af268bf7bf7603824a594732f
             2b/
                 59832ff9009879d885776f014a81dc39afa254
@@ -120,11 +122,15 @@ Side_quest_gameoflife/
                 c4c377b0f7a800b100d6c1a825c9be25b52f67
             3b/
                 e31cd67747a6aa4bb2b7d18e3cce6225917094
+            40/
+                1e1407f3a333264268ea6a57aa6f114d01a21a
             42/
                 861b60594489f6afd2ac234f6f210e3fe579ab
             48/
                 322120d66606804a793f3c85890044f4d068da
                 49610f4522af7d6adffa7f8c401d3fbd23a222
+            49/
+                1c421fc153583b0d4457ec50baf6b2277ecbe0
             4a/
                 016475dc75a693eef8236c6aad5daac99e99f7
             4c/
@@ -159,7 +165,10 @@ Side_quest_gameoflife/
                 7ebb601cd5754e0b6ecdd1f0653022fa7370b7
                 a07fd61c7edbf65026485e142ffc6dd59da1db
             69/
+                24ef90d8ec7f43707bfdd6ae23fcbecafe672f
                 5c752402270eafd428bc7575696177ec005428
+            6b/
+                01a67e5d2ed8c03d9e0f749ba25eee5dd4d30a
             6d/
                 44d30e7cb7d33fa1419aecdb1107b212b20c86
             70/
@@ -168,6 +177,8 @@ Side_quest_gameoflife/
             71/
                 2df97c49dd368a3d63e44f61cfdbd902388f78
                 ff79873ca4d6aac065a89597be50db2874814a
+            78/
+                197c1a4770c126f450804fc711142e67e4eb5f
             79/
                 91fb87bb7fe29b90e8f0f737ad5c6e24f4e4a8
                 db4647187ca0bc95507a5127083c18b4f927ee
@@ -196,6 +207,7 @@ Side_quest_gameoflife/
                 bbc9522f2f9fe8a5c2c93aabce2202ebe659e5
             93/
                 b7931c2e59b411e4edf8297bdfa6b002f8676c
+                c1d38b0f4d83a85e9d6ff02568d5c0e38e3014
             94/
                 15b136b1b248e58661c8bdf4f7bf412e35cab9
             95/
@@ -207,6 +219,7 @@ Side_quest_gameoflife/
                 6fd40097932905a8b0f1c1889de07b869aa561
             9a/
                 a0eddae46b0e23fa84220692a5db6065d14153
+                ccecdb6adce4968700ca7ba7a5f3dc59d2afda
             a0/
                 ab37ed8de97b4af6192135a00d9953bbf60086
             a6/
@@ -237,6 +250,8 @@ Side_quest_gameoflife/
                 8125bed99ef33ebba02f196058e95b7e0a3167
             c7/
                 75ddafa14632ad873cbc06cc3c97f6dd87c9c1
+            c8/
+                de866c3dc64afac6357bfd421a828aa2c7be0f
             ca/
                 593b8d06d5fb166bccdbdfa80fee57fae5cdb0
             cd/
@@ -262,6 +277,8 @@ Side_quest_gameoflife/
                 a3bdeb8460159a23ce5d9105319e7064538c0f
             e2/
                 63a7476a889a06962fd64d0920a0bf4fa63c31
+            e3/
+                b5e942e0e8287e92afe7930d87c7d23867519b
             e4/
                 0f5e925c7434f2aadc5505452e264e7cc0a4b8
             e6/
@@ -283,6 +300,7 @@ Side_quest_gameoflife/
                 35a07612d6cfab7ecc071f704fbd93d96a25dc
                 f13db634fc4cacde4a37307b42ec722f07106e
             f7/
+                a068034128b7c2d3b5f7a36381dffcb9b01f92
                 d5a47dd343a0c6f65bfd9de2417b75219e4037
             fa/
                 0eaf84c5870276fcffb259d91b807014fcd40c
@@ -326,6 +344,9 @@ Side_quest_gameoflife/
     docs/
         algorithms.md
         README.md
+    Executable_exp/
+        Experimente_filt_func_notebook.ipynb
+        Filtering_function.py
     notebooks/
         analysis.ipynb
         development.ipynb
