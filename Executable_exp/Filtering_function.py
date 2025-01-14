@@ -2,6 +2,7 @@ from PIL import Image, ImageOps
 from PIL.ImageQt import ImageQt
 from skimage import exposure
 import numpy as np
+import hashlib
 from PySide6.QtGui import QImage  # Importar QImage para la compatibilidad
 
 class FilterResult:
@@ -42,6 +43,30 @@ def calculate_new_dimensions(original_width, original_height, max_area):
     return new_width, new_height
 
 
+def generate_hash(processed_image, params):
+    """
+    Genera un hash único basado en la imagen procesada y los parámetros usados.
+
+    Args:
+        processed_image (PIL.Image.Image): Imagen procesada.
+        params (dict): Parámetros utilizados en el procesamiento.
+
+    Returns:
+        str: Hash único en formato hexadecimal.
+    """
+    hasher = hashlib.sha256()
+
+    # Añadir bytes de la imagen procesada
+    image_bytes = processed_image.tobytes()
+    hasher.update(image_bytes)
+
+    # Añadir los parámetros al hash
+    for key, value in sorted(params.items()):
+        hasher.update(f"{key}:{value}".encode('utf-8'))
+
+    return hasher.hexdigest()
+
+
 def apply_filter(image_path, max_area=256*256, light_correction_range=(20, 235)):
     """
     Aplica un filtro que incluye:
@@ -80,12 +105,20 @@ def apply_filter(image_path, max_area=256*256, light_correction_range=(20, 235))
         binary_image = Image.fromarray(banded_image).convert("1")
         binary_image_rgb = binary_image.convert("RGB")
 
+        params = {
+            "max_area": max_area,
+            "light_correction_range": light_correction_range
+        }
+
+        hash_value = generate_hash(binary_image_rgb, params)
+
         metadata = {
             "original_size": (original_width, original_height),
             "resized_size": (new_width, new_height),
             "original_pixel_count": original_width * original_height,
             "resized_pixel_count": new_width * new_height,
-            "filter_steps": ["grayscale", "level correction", "banding", "dithering"]
+            "filter_steps": ["grayscale", "level correction", "banding", "dithering"],
+            "hash": hash_value
         }
 
         return FilterResult(original_image, binary_image_rgb, metadata)

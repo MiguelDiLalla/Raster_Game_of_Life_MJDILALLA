@@ -76,6 +76,8 @@ Side_quest_gameoflife/
             1a/
                 980e788bd9e64838a2556edf2a13ee904b582f
                 f818634496b5088fd583a9da56362c0b2dc042
+            1c/
+                3791bc5950da7bc81e7ae6f4280256f095563a
             1d/
                 3ec0bdaba6b5d25e300bcd631d9682db46fe32
                 b634aadd054b976f81ba99458b457f428ace11
@@ -90,12 +92,14 @@ Side_quest_gameoflife/
                 cfd9848a6933350b087ad70d88368039088194
             24/
                 454f22970ed81a2391fec14ce695e3b211af3c
+                5da106e03cec39cc1d45ea4999c8f6d712374e
             26/
                 629bd15b19fe760667d55a285048738458c9e2
             28/
                 c8e786791083f33cab65aeef423357a7cf7472
             29/
                 99c7692f72f6ed1740b2cddbfdc0dade00d454
+                ce973dd48479f9d7bca73b31ca3bcb62a5dd1f
             2a/
                 e5bdf4a83cde54b7234427bc151a97bc2be7c0
                 f81e58d42fc11af268bf7bf7603824a594732f
@@ -160,6 +164,7 @@ Side_quest_gameoflife/
                 e8cf71ba2835bc30a93550739320176d9f96a7
             5f/
                 04c53dffc07754f17ec993d785928994e6260b
+                3633dc13f2e74070b52a9772c5b9a19e866efd
                 7dfb258360ab478cbfa3da06d4ddfdafcf2ae2
             61/
                 4e867a5c231d2a4d8c24e838c43ee87c0c2965
@@ -173,12 +178,16 @@ Side_quest_gameoflife/
                 01a67e5d2ed8c03d9e0f749ba25eee5dd4d30a
             6d/
                 44d30e7cb7d33fa1419aecdb1107b212b20c86
+            6e/
+                de4656df5748f977ce25512b14a16c3536eb4a
             70/
                 06561e5c0a29de2cd443f87f2d42824d5183c6
                 78297a6ec10439868d7eb5f6a040511ad968c1
             71/
                 2df97c49dd368a3d63e44f61cfdbd902388f78
                 ff79873ca4d6aac065a89597be50db2874814a
+            76/
+                4cedb83d633eda7957e71b3357a50ed5b310bc
             78/
                 197c1a4770c126f450804fc711142e67e4eb5f
             79/
@@ -196,6 +205,8 @@ Side_quest_gameoflife/
                 5444ee03538379275ef863504a9a6d3cd0063f
                 78bc2d9a9e0483f3924c5e79422b61a5b88d87
                 e3d02d4509503956ce6190d7c76f56e8c5b86d
+            89/
+                79730b339e6909e5650ee3e1d8cdda15c5b432
             8a/
                 4823448fa2e36b5fc79f0958bd47931adcc8d7
             8f/
@@ -216,6 +227,7 @@ Side_quest_gameoflife/
                 6369e5901c1b29c1f712f199c333f36c49f74b
             97/
                 10f414f288febe02abd4673edc8387a1a94995
+                4865c7944dcf55b97b2eb1356de81654e37667
             99/
                 0fb0ad9db69865500509894ad83bbc645078d5
                 6fd40097932905a8b0f1c1889de07b869aa561
@@ -253,6 +265,8 @@ Side_quest_gameoflife/
             c4/
                 4759aeca9ed48e92c3e32655d151b045906e8b
                 8125bed99ef33ebba02f196058e95b7e0a3167
+            c6/
+                6cbd72dc8ef6e31e35ce741bdef0de4b88f08b
             c7/
                 75ddafa14632ad873cbc06cc3c97f6dd87c9c1
             c8/
@@ -267,10 +281,13 @@ Side_quest_gameoflife/
                 f4c0dbb56828827aa66237a6aa48f312dfb08a
             d1/
                 68c06a7a5302d17871745bb86c209ad06fd326
+            d2/
+                8c55f038742c3ecdae631c469713e32a5d8d9f
             d3/
                 8e20317b46468922ab8cc2934ce42cc5916b47
             d4/
                 13bf15f9a576263e6c6c316fdbd28ec684df2a
+                fe448d0e860dece9e9e93b47e8a84c52adbea5
             d5/
                 1f37e1af49e545570fad585ae1b397647d2188
                 7757b2ee9feda39c89b920b35c9b8e0c86281c
@@ -351,7 +368,15 @@ Side_quest_gameoflife/
         algorithms.md
         README.md
     Executable_exp/
+        04232c00920783026ba9172a70063e08193e497fe8c049977b5e5c0e5f8f5dd7.png
+        1fb31ad6cdae10d5f0597d2ecefd2eaf57b1516858dc3d528ea6f90dd1a88f41.png
+        22a54ac017e4d8fcb9fb52ceecde2079bf4d13e8932426a213a3380b249ed599.png
+        44a3d5ea740a3c7b0febd68f6fb8ad7a4adb9c0daeb92a59937e52e22c360e92.png
+        7cc37e79a0875f4de586530d6eed2124b198c32199465b0fa35fabcdf254fae2.png
+        81174d841b5fa56a3f4450a8d947317c7f5f7f3cc5e1ab02dc1fb6eb50645aab.png
+        b78c10d1fe3a24a5990b424ba3e1682a17848080934cc3fbc2b96828ea685154.png
         blur_output.jpg
+        e9f0d7b9df8d8e9edd6da9a1dd8534c67abc4fad27e3519e12f19a467ca9b3ef.png
         Experimente_filt_func_notebook.ipynb
         Filtering_function.py
         grayscale_output.jpg

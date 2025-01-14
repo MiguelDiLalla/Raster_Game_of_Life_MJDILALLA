@@ -33,6 +33,7 @@ test-results/
 *.log
 *.tmp
 *.out
+*.png
 results/
 notebooks/results/
 
