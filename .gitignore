@@ -38,14 +38,14 @@ notebooks/results/
 
 # Environment and dependency management
 environment.yml
-requirements.txt
+# requirements.txt
 
 # Git and metadata
 .DS_Store
 .git/
 .gitignore
 Tree.txt
-estructura.txt
+# estructura.txt
 CACHEDIR.TAG
 
 # Custom exclusions
