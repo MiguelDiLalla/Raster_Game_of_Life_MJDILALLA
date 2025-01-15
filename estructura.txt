@@ -52,6 +52,8 @@ Side_quest_gameoflife/
             00/
                 19776f832e1a352ded62b8cb4ec1be003f9c9b
                 d8d4b0f2b9ebc5cecfb750b0edcdc7c96e9ca1
+            01/
+                d95a1b4f48266cbe3e5a580dbab31220d8f670
             03/
                 7b9808f1c87002855570ba84ab057a4686ca71
             07/
@@ -97,6 +99,7 @@ Side_quest_gameoflife/
                 629bd15b19fe760667d55a285048738458c9e2
             28/
                 c8e786791083f33cab65aeef423357a7cf7472
+                debe800c69f14007499743b3fb0da845463a71
             29/
                 99c7692f72f6ed1740b2cddbfdc0dade00d454
                 ce973dd48479f9d7bca73b31ca3bcb62a5dd1f
@@ -240,6 +243,8 @@ Side_quest_gameoflife/
                 ccecdb6adce4968700ca7ba7a5f3dc59d2afda
             a0/
                 ab37ed8de97b4af6192135a00d9953bbf60086
+            a5/
+                296cb5883f8f71f3edefd4bbfbde2264327785
             a6/
                 56be334c111e221cd0f11ac9b6f1b40c22d353
                 c103c429501b7ba340623deb9d2c7e4f360833
@@ -307,6 +312,7 @@ Side_quest_gameoflife/
                 a3bdeb8460159a23ce5d9105319e7064538c0f
             e2/
                 63a7476a889a06962fd64d0920a0bf4fa63c31
+                f064c98c521d5411ad3dc4096e4665dd762e51
             e3/
                 b5e942e0e8287e92afe7930d87c7d23867519b
             e4/
@@ -326,11 +332,14 @@ Side_quest_gameoflife/
             ef/
                 996fab6246bfcf29f2625560a0e8eaebff0e56
             f2/
+                3994ef7e7a188517e7ef50098b586276004701
                 5b1ca48e55b0304c632886d3417107223289ab
                 88702d2fa16d3cdf0035b15a9fcbc552cd88e7
             f3/
                 35a07612d6cfab7ecc071f704fbd93d96a25dc
                 f13db634fc4cacde4a37307b42ec722f07106e
+            f4/
+                347df5b04f5d325061c8dd259bbbe319318e74
             f7/
                 a068034128b7c2d3b5f7a36381dffcb9b01f92
                 d5a47dd343a0c6f65bfd9de2417b75219e4037
@@ -394,6 +403,7 @@ Side_quest_gameoflife/
         grayscale_output.jpg
         invert_output.jpg
         main_executable.py
+        processed_image.png
         __init__.py
         __pycache__/
             Filtering_function.cpython-312.pyc
@@ -435,7 +445,9 @@ Side_quest_gameoflife/
     src/
         default_game_of_life.gif
         dithering.py
+        Filtering_function.py
         game_of_life.py
+        gif_generator.py
         image_processing.py
         output.gif
         TESTING_NOTEBOOK.ipynb
