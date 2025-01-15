@@ -1,6 +1,6 @@
 import numpy as np
 from PIL import Image, ImageOps
-# from skimage import exposure
+from skimage import exposure
 import hashlib
 
 class FilterResult:
@@ -125,8 +125,8 @@ def apply_filter(image_path, max_area=256*256, light_correction_range=(20, 235),
 
         # Corrección de niveles ligeros
         grayscale_array = np.array(grayscale_image, dtype=np.float32)
-        # grayscale_corrected = exposure.rescale_intensity(grayscale_array, in_range="image", out_range=light_correction_range)
-        grayscale_corrected = np.clip(grayscale_array, light_correction_range[0], light_correction_range[1])
+        grayscale_corrected = exposure.rescale_intensity(grayscale_array, in_range="image", out_range=light_correction_range)
+        # grayscale_corrected = np.clip(grayscale_array, light_correction_range[0], light_correction_range[1])
 
         # Aplicar dithering si se especifica
         if dithering_algorithm == 'floyd_steinberg':

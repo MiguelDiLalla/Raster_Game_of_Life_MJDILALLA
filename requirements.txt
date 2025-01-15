@@ -4,3 +4,7 @@ pygame
 scipy==1.13.1
 Pillow
 py-cpuinfo
+matplotlib
+skimage
+
+
