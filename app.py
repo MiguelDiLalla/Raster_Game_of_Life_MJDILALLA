@@ -1,6 +1,7 @@
 import streamlit as st
 from src.Filtering_function import apply_filter
 from src.gif_generator import GifGenerator
+# import numpy as np
 
 # Page Configuration
 st.set_page_config(
