@@ -11,7 +11,7 @@ st.set_page_config(
 )
 
 # Title
-st.title("Game of Life: Generate Your Simulation GIF")
+st.title("DITHERING !!! & run")
 
 # Create two columns
 left_col, right_col = st.columns(2)
