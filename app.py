@@ -18,8 +18,8 @@ left_col, right_col = st.columns(2)
 
 # Left Column: File Uploader
 with left_col:
-    st.header("Upload an Image File")
-    st.write("Upload an image to define the initial state of the Game of Life.")
+    # st.header("Upload an Image File")
+    # st.write("Upload an image to define the initial state of the Game of Life.")
 
     uploaded_file = st.file_uploader(
         "Drag and drop an image here or click to upload",
@@ -28,7 +28,7 @@ with left_col:
     )
 
     if uploaded_file is not None:
-        st.write("File uploaded successfully! Processing the image.")
+        # st.write("File uploaded successfully! Processing the image.")
 
         # Apply filtering
         try:
@@ -40,39 +40,22 @@ with left_col:
             # Store the processed image in the session state
             st.session_state["processed_image"] = processed_image
 
-        except Exception as e:
-            st.error(f"Error processing the image: {e}")
-
-# Right Column: GIF Output
-with right_col:
-    st.header("Generated Simulation")
-
-    if "processed_image" in st.session_state:
-        steps = st.slider("Number of Steps", min_value=10, max_value=500, value=100, step=10)
-
-        if st.button("Generate GIF"):
-            st.write("Generating GIF... Please wait.")
-
-            # Convert processed image to numpy array for simulation
-            image_array = np.array(st.session_state["processed_image"].convert("1"))
+            # Automatically generate the GIF
+            image_array = np.array(processed_image.convert("1"))
             initial_board = (image_array > 0).astype(int)
 
-            # Generate GIF
             gif_path = "game_of_life_simulation.gif"
-            generator = GifGenerator(initial_board=initial_board, steps=steps, verbose=True)
+            generator = GifGenerator(initial_board=initial_board, steps=10, verbose=True)
             generator.simulate()
             generator.generate_gif(save=True, filename=gif_path)
 
             # Display the GIF
             st.image(gif_path, caption="Simulation Output", use_container_width=True)
 
-            # Provide a download button
-            with open(gif_path, "rb") as file:
-                st.download_button(
-                    label="Download Simulation GIF",
-                    data=file,
-                    file_name="game_of_life_simulation.gif",
-                    mime="image/gif"
-                )
-    else:
-        st.info("Please upload and process an image to generate the simulation.")
+        except Exception as e:
+            st.error(f"Error processing the image: {e}")
+
+# Right Column: GIF Output
+with right_col:
+    # st.header("Generated Simulation")
+    pass
