@@ -5,7 +5,7 @@ from src.gif_generator import GifGenerator
 
 # Page Configuration
 st.set_page_config(
-    page_title="Game of Life GIF Generator",
+    # page_title="Game of Life GIF Generator",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -18,7 +18,7 @@ left_col, right_col = st.columns(2)
 
 # Left Column: File Uploader
 with left_col:
-    # st.header("Upload an Image File")
+    st.header("Game of Life GIF Generator")
     # st.write("Upload an image to define the initial state of the Game of Life.")
 
     uploaded_file = st.file_uploader(
@@ -49,13 +49,15 @@ with left_col:
             generator.simulate()
             generator.generate_gif(save=True, filename=gif_path)
 
-            # Display the GIF
-            st.image(gif_path, caption="Simulation Output", use_container_width=True)
+            # Store the generated GIF path in the session state
+            st.session_state["gif_path"] = gif_path
 
         except Exception as e:
             st.error(f"Error processing the image: {e}")
 
 # Right Column: GIF Output
 with right_col:
-    # st.header("Generated Simulation")
-    pass
+    st.header("Generated Simulation")
+
+    if "gif_path" in st.session_state:
+        st.image(st.session_state["gif_path"], caption="Simulation Output", use_container_width=True)
