@@ -22,7 +22,7 @@ with left_col:
     # st.write("Upload an image to define the initial state of the Game of Life.")
 
     uploaded_file = st.file_uploader(
-        # "Drag and drop an image here or click to upload",
+        " ",
         type=["png", "jpg", "jpeg"],
         accept_multiple_files=False
     )
