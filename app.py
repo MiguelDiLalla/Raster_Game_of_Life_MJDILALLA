@@ -1,7 +1,7 @@
 import streamlit as st
+import numpy as np
 from src.Filtering_function import apply_filter
 from src.gif_generator import GifGenerator
-import numpy as np
 
 # Page Configuration
 st.set_page_config(
@@ -35,7 +35,7 @@ with left_col:
             filter_result = apply_filter(uploaded_file, max_area=256*256, dithering_algorithm='floyd_steinberg')
             processed_image = filter_result.processed_image
 
-            st.image(processed_image, caption="Processed Image", use_column_width=True)
+            st.image(processed_image, caption="Processed Image", use_container_width=True)
 
             # Store the processed image in the session state
             st.session_state["processed_image"] = processed_image
@@ -64,7 +64,7 @@ with right_col:
             generator.generate_gif(save=True, filename=gif_path)
 
             # Display the GIF
-            st.image(gif_path, caption="Simulation Output", use_column_width=True)
+            st.image(gif_path, caption="Simulation Output", use_container_width=True)
 
             # Provide a download button
             with open(gif_path, "rb") as file:
